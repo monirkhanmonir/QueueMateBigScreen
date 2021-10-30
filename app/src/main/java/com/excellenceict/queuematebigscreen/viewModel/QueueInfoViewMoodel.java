@@ -1,6 +1,7 @@
 package com.excellenceict.queuematebigscreen.viewModel;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -18,19 +19,23 @@ public class QueueInfoViewMoodel extends AndroidViewModel implements Runnable{
     private QueueRepository queueRepository;
     private MutableLiveData<List<QueueModel>> liveData;
     private List<QueueModel> queueInfoList;
+    private boolean isExit = false;
+    private Context context;
 
     public QueueInfoViewMoodel(@NonNull Application application) {
         super(application);
+        context = application;
         queueRepository = QueueRepository.getQueueRepositoryInstance(application);
         queueInfoList = new ArrayList<>();
-        liveData = new MutableLiveData<>();
+        isExit =true;
         new Thread(this).start();
 
     }
 
     public MutableLiveData<List<QueueModel>> getAllQueueInfo(){
         if(liveData==null){
-            queueInfoList =  queueRepository.createQueueFromDb();
+            liveData = new MutableLiveData<>();
+            queueInfoList =  queueRepository.createQueueFromDb(context);
             Log.d("TAG","SIZE========="+queueInfoList.size());
             liveData.postValue(queueInfoList);
         }
@@ -38,7 +43,7 @@ public class QueueInfoViewMoodel extends AndroidViewModel implements Runnable{
     }
 
     public void getQueueFromRepo(){
-        queueInfoList =  queueRepository.createQueueFromDb();
+        queueInfoList =  queueRepository.createQueueFromDb(context);
         liveData.postValue(queueInfoList);
 
     }
@@ -46,7 +51,13 @@ public class QueueInfoViewMoodel extends AndroidViewModel implements Runnable{
     public String getVoiceData(List<QueueModel> queueList){
         String voiceData = "";
         for(QueueModel queueModel :queueList){
-            voiceData += " Token Number "+queueModel.getNextQueueId()+" , "+queueModel.getRoomNumber()+". ";
+            if(queueModel.getNextQueueId()=="" || queueModel.getNextPersionName()==null){
+                System.out.println("========1===="+queueModel.getNextQueueId());
+            }else {
+                System.out.println("=======2====="+queueModel.getNextQueueId());
+                voiceData += " Token Number "+queueModel.getNextQueueId()+" , "+queueModel.getRoomNumber()+". ";
+                queueRepository.updateQueueToDb(context,queueModel.getPk_id());
+            }
         }
         return voiceData;
     }
@@ -55,10 +66,11 @@ public class QueueInfoViewMoodel extends AndroidViewModel implements Runnable{
     @Override
     public void run() {
         System.out.println("New thread Start.....============2");
-        while (true){
+        while (isExit){
             try {
 
-                Thread.sleep(60000);
+                Thread.sleep(100*1000);
+
             }catch (Exception e){
 
             }
@@ -66,5 +78,6 @@ public class QueueInfoViewMoodel extends AndroidViewModel implements Runnable{
             System.out.println("do something===========");
 
         }
+        System.out.println("============Stop Thread==================");
     }
 }

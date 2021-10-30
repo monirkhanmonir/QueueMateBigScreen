@@ -1,17 +1,13 @@
 package com.excellenceict.queuematebigscreen.service.repository;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.StrictMode;
 import android.util.Log;
 
-import androidx.lifecycle.MutableLiveData;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import com.excellenceict.queuematebigscreen.service.model.QueueModel;
 import com.excellenceict.queuematebigscreen.service.network.DBConnector;
+import com.excellenceict.queuematebigscreen.util.QueuePreference;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -20,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QueueRepository implements Runnable{
-
-    private static Context context;
+    private final static String TAG= "QueueRepository";
+    private Context context;
     private static QueueRepository queueRepository;
     private Connection connection;
     private List<QueueModel> queueInfoList;
@@ -35,56 +31,30 @@ public class QueueRepository implements Runnable{
         return queueRepository;
     }
 
-//    public MutableLiveData<List<QueueModel>> getQueueInfoList() {
-//        if (liveData == null) {
-//             createQueueFromDb();
-//         //   new QueueTask().execute();
-//          //  getDataWithThread();
-//
-//          //  new QueueRepository().start();
-//
-//        }
-//        return liveData;
-//    }
-
-
-//    public void getDataWithThread() {
-//        while (true) {
-//            try {
-//               new QueueTask().execute();
-//                Thread.sleep(5000);
-//            } catch (Exception e) {
-//
-//            }
-//        }
-//    }
-
-    public List<QueueModel> createQueueFromDb() {
-        int screenNo = 1;
+    public List<QueueModel> createQueueFromDb(Context context) {
         queueInfoList = new ArrayList<>();
 
         if (Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        System.out.println("Call Connection ============");
+        Log.d(TAG,"Call Connection ============"+QueuePreference.getSelectedScreenId(context));
         try {
             connection = DBConnector.createConnection();
-            System.out.println("Call Connection ============ 2");
             if (connection != null) {
-                System.out.println("DB Connection success============");
+                Log.d(TAG,"DB Connection success============");
                 String query = "select NVL(bs.V_WS_CODE, ''), \n" +
                         "bs.N_QUEUE_ID1, bs.V_PERSON_NAME1,\n" +
                         "NVL(bs.N_QUEUE_ID2, ''), NVL(bs.V_PERSON_NAME2, ''), NVL(bs.N_PK_ID, ''), \n" +
                         "NVL(bs.N_QUEUE_ID3, ''), NVL(bs.V_PERSON_NAME3, '')\n" +
                         "From V_QMS_BIG_SCREEN bs, QMS_STATION_SCREEN_MAP s\n" +
                         "where bs.N_WS_ID = s.N_WS_ID\n" +
-                        "and s.N_SCREEN_ID = '"+screenNo+"'";
+                        "and s.N_SCREEN_ID = '"+Integer.parseInt(QueuePreference.getSelectedScreenId(context))+"'";
 
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(query);
                 while (resultSet.next()) {
-                    System.out.println("Result data:======================= " + resultSet.getString(3));
+                 //   System.out.println("Result data:======================= " + resultSet.getString(3));
 
                     queueInfoList.add(new QueueModel(
                             resultSet.getString(1),
@@ -92,26 +62,61 @@ public class QueueRepository implements Runnable{
                             resultSet.getString(3),
                             resultSet.getString(4),
                             resultSet.getString(5),
-                            resultSet.getString(6),
-                            resultSet.getString(7)
+                            resultSet.getString(7),
+                            resultSet.getString(8),
+                            resultSet.getString(6)
                     ));
 
                 }
-                //liveData.postValue(queueInfoList);
 
+                //liveData.postValue(queueInfoList);
+                Log.d(TAG,"Queue info executed success============"+queueInfoList.size());
+                Log.d(TAG, "Data: "+queueInfoList.toString());
                 connection.close();
             } else {
-                System.out.println("DB Connection fail============");
+                Log.d(TAG,"DB Connection fail============");
             }
         } catch (Exception e) {
-            System.out.println("Connection Exception===========1=" + e.getMessage());
+            Log.d(TAG,"Connection Exception===========1=" + e.getMessage());
         }
         return queueInfoList;
     }
 
+    public void updateQueueToDb(Context context, String pk_id) {
+
+        if (Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        Log.d(TAG,"Call Connection ============"+QueuePreference.getSelectedScreenId(context));
+        try {
+            connection = DBConnector.createConnection();
+            if (connection != null) {
+                Log.d(TAG,"DB Connection success============");
+                String query = "update QMS_QUEUE\n" +
+                        "set N_CALL_COUNT = N_CALL_COUNT + 1,\n" +
+                        "    D_CALL_TIME = sysdate\n" +
+                        "where D_QUEUE_DATE = trunc(sysdate)\n" +
+                        "and N_PK_ID = '"+pk_id+"'";
+
+                Statement statement = connection.createStatement();
+                statement.executeUpdate(query);
+
+                //liveData.postValue(queueInfoList);
+                Log.d(TAG, "Data:=========== Query updaate execure success"+pk_id);
+                connection.close();
+            } else {
+                Log.d(TAG,"DB Connection fail============");
+            }
+        } catch (Exception e) {
+            Log.d(TAG,"Connection Exception===========1=" + e.getMessage());
+        }
+    }
+
     @Override
     public void run() {
-        System.out.println("New thread Start.....============");
+        Log.d(TAG,"New thread Start.....============");
+        System.out.println();
         while (true){
             try {
 
@@ -119,77 +124,9 @@ public class QueueRepository implements Runnable{
             }catch (Exception e){
 
             }
-            createQueueFromDb();
-            System.out.println("do something===========");
-
+            createQueueFromDb(context);
+            Log.d(TAG,"Do something....============");
         }
     }
-
-
-//    private class QueueTask extends AsyncTask<Void, Void, Void> {
-//
-//        @Override
-//        protected void onPreExecute() {
-//
-//            if (liveData == null) {
-//                liveData = new MutableLiveData();
-//            }
-//            queueInfoList = new ArrayList<>();
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//            if (Build.VERSION.SDK_INT > 9) {
-//                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//                StrictMode.setThreadPolicy(policy);
-//            }
-//            System.out.println("Call Connection ============");
-//            try {
-//                connection = DBConnector.createConnection();
-//                System.out.println("Call Connection ============ 2");
-//                if (connection != null) {
-//                    System.out.println("DB Connection success============");
-//                    String query = "SELECT D_QUEUE_TIME, N_QUEUE_ID,\n"
-//                            + "decode(substr(V_PERSON_NAME,1,instr(V_PERSON_NAME,' ')-1),null,V_PERSON_NAME,substr(V_PERSON_NAME,1,instr(V_PERSON_NAME,' ')-1)) V_PERSON_NAME, \n"
-//                            + "N_CALL_NOW, nvl(V_WS_CODE,'UNKNOWN') V_WS_CODE\n"
-//                            + "FROM V_QMS_QUEUE_C l \n"
-//                            + "WHERE l.D_QUEUE_DATE = trunc(sysdate)\n"
-//                            + "and l.D_QUEUE_END_DATE is null\n"
-//                            + "and l.D_QUEUE_TIME >= sysdate-1/1\n"
-//                            + "order by D_QUEUE_TIME, N_QUEUE_ID";
-//
-//                    Statement statement = connection.createStatement();
-//                    ResultSet resultSet = statement.executeQuery(query);
-//                    while (resultSet.next()) {
-//                        System.out.println("Result data:======================= " + resultSet.getString(3));
-//
-//                        queueInfoList.add(new QueueModel(
-//                                resultSet.getString(1),
-//                                resultSet.getString(2),
-//                                resultSet.getString(3),
-//                                resultSet.getInt(4),
-//                                resultSet.getString(5)
-//                        ));
-//
-//                    }
-//                    liveData.postValue(queueInfoList);
-//
-//                    connection.close();
-//                } else {
-//                    System.out.println("DB Connection fail============");
-//                }
-//            } catch (Exception e) {
-//                System.out.println("Connection Exception===========1=" + e.getMessage());
-//            }
-//
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void aVoid) {
-//
-//        }
-//    }
-
 
 }

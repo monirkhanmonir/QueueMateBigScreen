@@ -5,30 +5,258 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="7"
+    android:background="@color/white"
+    android:weightSum="10"
     tools:context=".view.ui.MainActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#acb4">
+        android:weightSum="4"
+        android:baselineAligned="false">
 
-        <Button
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="changeData"
-            android:onClick="chengeLiveData"/>
+            android:layout_weight="1"
+            android:padding="@dimen/_3sdp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="@color/colorHeader"
+            tools:ignore="NestedWeights">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextClock
+                    android:id="@+id/textClockId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/default_time"
+                    android:includeFontPadding="false"
+                    android:textSize="@dimen/_18sdp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:format12Hour="hh:mm:ss"/>
 
+                <TextClock
+                    android:id="@+id/textAmpmId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/am"
+                    android:textSize="@dimen/_14sdp"
+                    android:includeFontPadding="false"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:format12Hour="a"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextClock
+                    android:id="@+id/textDateId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="@string/default_date"
+                    android:textSize="@dimen/_14sdp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:format12Hour="MMM dd , yyyy"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="@dimen/_3sdp"
+            android:orientation="horizontal"
+            android:background="@color/colorHeader">
+            <View
+                android:layout_width="@dimen/_2sdp"
+                android:layout_height="match_parent"
+                android:background="@color/appPoorBackground"/>
+
+            <TextView
+                android:id="@+id/selectedScreenNameId"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/screen_no"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:includeFontPadding="false"
+                android:textSize="@dimen/_18sdp"
+                android:textAllCaps="false"
+                android:onClick="selectScreen"
+                tools:ignore="UsingOnClickInXml" />
+            <View
+                android:layout_width="@dimen/_2sdp"
+                android:layout_height="match_parent"
+                android:background="@color/appPoorBackground"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="@dimen/_3sdp"
+            android:background="@color/colorHeader">
+            <View
+                android:layout_width="@dimen/_2sdp"
+                android:layout_height="match_parent"
+                android:background="@color/appPoorBackground"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_3sdp"
+            android:background="@color/colorHeader"
+            android:layout_weight="1">
+            <View
+                android:layout_width="@dimen/_2sdp"
+                android:layout_height="match_parent"
+                android:background="@color/appPoorBackground"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="@dimen/_28sdp"
+                    android:layout_height="@dimen/_28sdp"
+                    android:padding="@dimen/_3sdp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/qm"
+                    android:scaleType="centerCrop"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/mate"
+                    android:gravity="bottom"
+                    android:textSize="@dimen/_16sdp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:includeFontPadding="false"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_2sdp"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
-        android:background="#b0a">
+        android:layout_weight="8"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1ssp"
+            android:background="@color/appBackground"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="7"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingVertical="@dimen/_3sdp"
+                    android:gravity="center"
+                    android:text="@string/room_number"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_16sdp"
+                    android:includeFontPadding="false"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:weightSum="10"
+                android:background="@color/colorPrimary"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:background="@color/colorHeader"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingVertical="@dimen/_3sdp"
+                        android:gravity="center"
+                        android:text="@string/now"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/_16sdp"
+                        android:includeFontPadding="false"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:background="@color/colorPrimary"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingVertical="@dimen/_3sdp"
+                        android:gravity="center"
+                        android:text="@string/next"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/_18sdp"
+                        android:includeFontPadding="false"
+                        android:textStyle="bold" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:background="@color/colorHeader"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingVertical="@dimen/_3sdp"
+                        android:gravity="center"
+                        android:text="@string/waiting"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/_16sdp"
+                        android:includeFontPadding="false"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/queueRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"/>
 
     </LinearLayout>
@@ -36,7 +264,33 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#a6b4">
+        android:layout_marginTop="@dimen/_2sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="match_parent"
+            android:background="@drawable/alert_bg_collor"
+            android:text="@string/notice"
+            android:textSize="@dimen/_18sdp"
+            android:includeFontPadding="false"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+
+        <TextView
+            android:background="@color/colorPrimary"
+            android:id="@+id/marqueeTextId"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/text"
+            android:includeFontPadding="false"
+            android:textSize="@dimen/_18sdp"
+            android:scrollHorizontally="true"/>
 
     </LinearLayout>
 </LinearLayout>

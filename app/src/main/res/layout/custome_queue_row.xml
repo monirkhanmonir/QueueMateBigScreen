@@ -4,7 +4,12 @@
     android:layout_width="match_parent"
     android:background="@android:color/white"
     android:layout_height="wrap_content">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2sdp"
+        android:background="@color/appBackground"/>
     <LinearLayout
+        android:id="@+id/queue_row_layout_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -13,76 +18,95 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:paddingVertical="10dp"
-            android:background="@color/colorHeader"
-            android:paddingHorizontal="5dp"
+            android:paddingVertical="@dimen/_5sdp"
+            android:gravity="center"
+            android:background="@drawable/row_gradient_blue"
+            android:paddingHorizontal="@dimen/_3sdp"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/queueRoomNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Room-0"
+                android:paddingStart="@dimen/_5sdp"
+                android:text="@string/station"
                 android:textStyle="bold"
-                android:textSize="18sp"
+                android:singleLine="true"
+                android:includeFontPadding="false"
+                android:textSize="@dimen/_16sdp"
                 android:textColor="@color/white"
                 />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:paddingVertical="10dp"
-            android:paddingHorizontal="5dp"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/queueCurrent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tokent-0"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/colorHeader"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:paddingVertical="10dp"
-            android:background="@color/appPoorBackground"
-            android:paddingHorizontal="5dp"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/queueNext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="name"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@color/colorHeader"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:paddingVertical="10dp"
-            android:paddingHorizontal="5dp"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/queueWaiting"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="name"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@color/colorHeader"
-                />
-        </LinearLayout>
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/appBackground"/>
 
+         <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+             android:weightSum="10"
+             android:orientation="horizontal">
+             <LinearLayout
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+                 android:layout_weight="3"
+                 android:gravity="center"
+                 android:paddingVertical="@dimen/_5sdp"
+                 android:paddingHorizontal="@dimen/_3sdp"
+                 android:orientation="vertical">
+                 <TextView
+                     android:id="@+id/queueCurrent"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:text="@string/token"
+                     android:singleLine="true"
+                     android:textSize="@dimen/_16sdp"
+                     android:includeFontPadding="false"
+                     android:paddingStart="@dimen/_5sdp"
+                     android:textStyle="bold"
+                     android:textColor="@color/colorHeader"/>
+             </LinearLayout>
+
+             <LinearLayout
+                 android:id="@+id/nextCallingLayout"
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+                 android:layout_weight="4"
+                 android:gravity="center"
+                 android:paddingVertical="@dimen/_5sdp"
+                 android:background="@color/appPoorBackground"
+                 android:paddingHorizontal="@dimen/_3sdp"
+                 android:orientation="vertical">
+                 <TextView
+                     android:id="@+id/queueNext"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:text="@string/name"
+                     android:textStyle="bold"
+                     android:singleLine="true"
+                     android:includeFontPadding="false"
+                     android:textSize="@dimen/_18sdp"
+                     android:paddingStart="@dimen/_5sdp"
+                     android:textColor="@color/colorHeader"
+                     />
+             </LinearLayout>
+             <LinearLayout
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+                 android:layout_weight="3"
+                 android:paddingVertical="@dimen/_5sdp"
+                 android:gravity="center"
+                 android:paddingHorizontal="@dimen/_3sdp"
+                 android:orientation="vertical">
+                 <TextView
+                     android:id="@+id/queueWaiting"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:text="@string/name"
+                     android:textStyle="bold"
+                     android:singleLine="true"
+                     android:includeFontPadding="false"
+                     android:textSize="@dimen/_16sdp"
+                     android:paddingStart="@dimen/_5sdp"
+                     android:textColor="@color/colorHeader"/>
+             </LinearLayout>
+         </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

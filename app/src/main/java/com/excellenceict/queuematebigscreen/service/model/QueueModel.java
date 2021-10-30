@@ -8,9 +8,9 @@ public class QueueModel {
     private String nextPersionName;
     private String waitingQueueId;
     private String waitingPersionName;
+    private String pk_id;
 
-    public QueueModel(String roomNumber, String currentQueueId, String currentPersionName, String nextQueueId,
-                      String nextPersionName, String waitingQueueId, String waitingPersionName) {
+    public QueueModel(String roomNumber, String currentQueueId, String currentPersionName, String nextQueueId, String nextPersionName, String waitingQueueId, String waitingPersionName, String pk_id) {
         this.roomNumber = roomNumber;
         this.currentQueueId = currentQueueId;
         this.currentPersionName = currentPersionName;
@@ -18,6 +18,15 @@ public class QueueModel {
         this.nextPersionName = nextPersionName;
         this.waitingQueueId = waitingQueueId;
         this.waitingPersionName = waitingPersionName;
+        this.pk_id = pk_id;
+    }
+
+    public String getPk_id() {
+        return pk_id;
+    }
+
+    public void setPk_id(String pk_id) {
+        this.pk_id = pk_id;
     }
 
     public String getRoomNumber() {

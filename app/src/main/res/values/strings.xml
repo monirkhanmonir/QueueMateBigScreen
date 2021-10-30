@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">QueueMateBigScreen</string>
+    <string name="default_time">00:00:00</string>
+    <string name="am">AM</string>
+    <string name="default_date">00 00, 00</string>
+    <string name="screen_no">Screen No:</string>
+    <string name="mate">Mate</string>
+    <string name="room_number">Station</string>
+    <string name="now">Now</string>
+    <string name="next">Next</string>
+    <string name="waiting">Waiting</string>
+    <string name="notice">Notice</string>
+    <string name="text">text</string>
+    <string name="station">Station</string>
+    <string name="token">Token</string>
+    <string name="name">name</string>
 </resources>
