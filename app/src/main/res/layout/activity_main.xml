@@ -31,12 +31,13 @@
                 <TextClock
                     android:id="@+id/textClockId"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/default_time"
                     android:includeFontPadding="false"
-                    android:textSize="@dimen/_18sdp"
+                    android:textSize="@dimen/_16sdp"
                     android:gravity="center"
                     android:textStyle="bold"
+                    android:textColor="@android:color/white"
                     android:format12Hour="hh:mm:ss"/>
 
                 <TextClock
@@ -44,10 +45,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/am"
-                    android:textSize="@dimen/_14sdp"
+                    android:textSize="@dimen/_13sdp"
                     android:includeFontPadding="false"
                     android:gravity="center"
                     android:textStyle="bold"
+                    android:textColor="@android:color/white"
                     android:format12Hour="a"/>
             </LinearLayout>
             <LinearLayout
@@ -60,9 +62,10 @@
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
                     android:text="@string/default_date"
-                    android:textSize="@dimen/_14sdp"
+                    android:textSize="@dimen/_12sdp"
                     android:gravity="center"
                     android:textStyle="bold"
+                    android:textColor="@android:color/white"
                     android:format12Hour="MMM dd , yyyy"/>
             </LinearLayout>
 
@@ -119,36 +122,56 @@
                 android:layout_width="@dimen/_2sdp"
                 android:layout_height="match_parent"
                 android:background="@color/appPoorBackground"/>
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:layout_height="match_parent">
                 <com.google.android.material.imageview.ShapeableImageView
+                   android:id="@+id/logoIconId"
                     android:layout_width="@dimen/_28sdp"
                     android:layout_height="@dimen/_28sdp"
                     android:padding="@dimen/_3sdp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:srcCompat="@drawable/qm"
                     android:scaleType="centerCrop"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
                     />
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_alignLeft="@id/logoIconId"-->
+<!--                    android:layout_alignParentTop="true"-->
+<!--                    android:layout_alignParentBottom="true"-->
+<!--                    android:layout_marginStart="@dimen/_2sdp"-->
+<!--                    android:layout_marginLeft="116dp"-->
+<!--                    android:layout_marginTop="2dp"-->
+<!--                    android:layout_marginBottom="2dp"-->
+<!--                    android:gravity="bottom"-->
+<!--                    android:includeFontPadding="false"-->
+<!--                    android:text="@string/mate"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="@dimen/_16sdp"-->
+<!--                    android:textStyle="bold" />-->
+
                 <TextView
+                    android:id="@+id/textOptionMenuId"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/mate"
-                    android:gravity="bottom"
-                    android:textSize="@dimen/_16sdp"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:includeFontPadding="false"
-                    android:layout_marginBottom="@dimen/_2sdp"
-                    android:layout_marginStart="@dimen/_2sdp"/>
+                    android:text="&#8942;"
+                    android:textSize="@dimen/_18sdp"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    />
 
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </LinearLayout>
     </LinearLayout>
@@ -236,7 +259,6 @@
                     android:layout_weight="3"
                     android:background="@color/colorHeader"
                     android:orientation="vertical">
-
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

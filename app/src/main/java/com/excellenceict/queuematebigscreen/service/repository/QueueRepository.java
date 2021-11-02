@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.excellenceict.queuematebigscreen.service.model.QueueModel;
 import com.excellenceict.queuematebigscreen.service.network.DBConnector;
+import com.excellenceict.queuematebigscreen.util.Constants;
 import com.excellenceict.queuematebigscreen.util.QueuePreference;
 
 import java.sql.Connection;
@@ -23,6 +24,7 @@ public class QueueRepository implements Runnable{
     private List<QueueModel> queueInfoList;
 
 
+
     public static QueueRepository getQueueRepositoryInstance(Context context) {
         if (queueRepository == null) {
             context = context;
@@ -32,13 +34,14 @@ public class QueueRepository implements Runnable{
     }
 
     public List<QueueModel> createQueueFromDb(Context context) {
+        QueuePreference queuePreference = new QueuePreference(context);
         queueInfoList = new ArrayList<>();
 
         if (Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        Log.d(TAG,"Call Connection ============"+QueuePreference.getSelectedScreenId(context));
+        Log.d(TAG,"Call Connection ============"+queuePreference.getString(Constants.KEY_SELECTED_SCREEN_ID,"1"));
         try {
             connection = DBConnector.createConnection();
             if (connection != null) {
@@ -46,10 +49,11 @@ public class QueueRepository implements Runnable{
                 String query = "select NVL(bs.V_WS_CODE, ''), \n" +
                         "bs.N_QUEUE_ID1, bs.V_PERSON_NAME1,\n" +
                         "NVL(bs.N_QUEUE_ID2, ''), NVL(bs.V_PERSON_NAME2, ''), NVL(bs.N_PK_ID, ''), \n" +
-                        "NVL(bs.N_QUEUE_ID3, ''), NVL(bs.V_PERSON_NAME3, '')\n" +
+                        "NVL(bs.N_QUEUE_ID3, ''), NVL(bs.V_PERSON_NAME3, ''),bs.CALLOUT_TEXT \n" +
                         "From V_QMS_BIG_SCREEN bs, QMS_STATION_SCREEN_MAP s\n" +
                         "where bs.N_WS_ID = s.N_WS_ID\n" +
-                        "and s.N_SCREEN_ID = '"+Integer.parseInt(QueuePreference.getSelectedScreenId(context))+"'";
+                        "and bs.N_SCREEN_ID = s.N_SCREEN_ID\n"+
+                        "and s.N_SCREEN_ID = '"+Integer.parseInt(queuePreference.getString(Constants.KEY_SELECTED_SCREEN_ID,"1"))+"'";
 
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(query);
@@ -64,7 +68,8 @@ public class QueueRepository implements Runnable{
                             resultSet.getString(5),
                             resultSet.getString(7),
                             resultSet.getString(8),
-                            resultSet.getString(6)
+                            resultSet.getString(6),
+                            resultSet.getString(9)
                     ));
 
                 }
@@ -83,12 +88,13 @@ public class QueueRepository implements Runnable{
     }
 
     public void updateQueueToDb(Context context, String pk_id) {
+        QueuePreference queuePreference = new QueuePreference(context);
 
         if (Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        Log.d(TAG,"Call Connection ============"+QueuePreference.getSelectedScreenId(context));
+        Log.d(TAG,"Call Connection ============"+queuePreference.getString(Constants.KEY_SELECTED_SCREEN_ID,"1"));
         try {
             connection = DBConnector.createConnection();
             if (connection != null) {

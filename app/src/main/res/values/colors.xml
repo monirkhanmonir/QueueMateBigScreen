@@ -11,7 +11,16 @@
 
     <color name="colorHeader">#196A98</color>
     <color name="colorPrimary">#035483</color>
+    <color name="colorPrimaryBack">#6B035483</color>
     <color name="appBackground">#4378B8D8</color>
     <color name="appPoorBackground">#43AFD3E4</color>
     <color name="test">#110736DF</color>
+
+
+    <color name="color_pink">#cf4bf8</color>
+    <color name="color_violet">#8813e4</color>
+    <color name="color_grayviolet">#B66CF1</color>
+    <color name="Color_blue">#3d93d9</color>
+    <color name="color_greenlight">#5ff0f7</color>
+    <color name="successColor">#036C03</color>
 </resources>

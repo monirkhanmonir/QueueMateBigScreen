@@ -9,8 +9,10 @@ public class QueueModel {
     private String waitingQueueId;
     private String waitingPersionName;
     private String pk_id;
+    private String calloutText;
 
-    public QueueModel(String roomNumber, String currentQueueId, String currentPersionName, String nextQueueId, String nextPersionName, String waitingQueueId, String waitingPersionName, String pk_id) {
+    public QueueModel(String roomNumber, String currentQueueId, String currentPersionName, String nextQueueId,
+                      String nextPersionName, String waitingQueueId, String waitingPersionName, String pk_id, String calloutText) {
         this.roomNumber = roomNumber;
         this.currentQueueId = currentQueueId;
         this.currentPersionName = currentPersionName;
@@ -19,6 +21,15 @@ public class QueueModel {
         this.waitingQueueId = waitingQueueId;
         this.waitingPersionName = waitingPersionName;
         this.pk_id = pk_id;
+        this.calloutText = calloutText;
+    }
+
+    public String getCalloutText() {
+        return calloutText;
+    }
+
+    public void setCalloutText(String calloutText) {
+        this.calloutText = calloutText;
     }
 
     public String getPk_id() {

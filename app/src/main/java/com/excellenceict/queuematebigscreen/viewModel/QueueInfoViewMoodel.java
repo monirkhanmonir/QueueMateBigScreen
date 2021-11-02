@@ -10,7 +10,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.excellenceict.queuematebigscreen.service.model.QueueModel;
+import com.excellenceict.queuematebigscreen.service.network.DBConnector;
 import com.excellenceict.queuematebigscreen.service.repository.QueueRepository;
+import com.excellenceict.queuematebigscreen.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +21,16 @@ public class QueueInfoViewMoodel extends AndroidViewModel implements Runnable{
     private QueueRepository queueRepository;
     private MutableLiveData<List<QueueModel>> liveData;
     private List<QueueModel> queueInfoList;
-    private boolean isExit = false;
+//    private boolean isExit = false;
     private Context context;
 
     public QueueInfoViewMoodel(@NonNull Application application) {
         super(application);
         context = application;
+        new DBConnector(application);
         queueRepository = QueueRepository.getQueueRepositoryInstance(application);
         queueInfoList = new ArrayList<>();
-        isExit =true;
+        Constants.IS_EXIT =true;
         new Thread(this).start();
 
     }
@@ -55,7 +58,7 @@ public class QueueInfoViewMoodel extends AndroidViewModel implements Runnable{
                 System.out.println("========1===="+queueModel.getNextQueueId());
             }else {
                 System.out.println("=======2====="+queueModel.getNextQueueId());
-                voiceData += " Token Number "+queueModel.getNextQueueId()+" , "+queueModel.getRoomNumber()+". ";
+                voiceData += queueModel.getCalloutText()+"। ";
                 queueRepository.updateQueueToDb(context,queueModel.getPk_id());
             }
         }
@@ -66,7 +69,7 @@ public class QueueInfoViewMoodel extends AndroidViewModel implements Runnable{
     @Override
     public void run() {
         System.out.println("New thread Start.....============2");
-        while (isExit){
+        while (Constants.IS_EXIT){
             try {
 
                 Thread.sleep(100*1000);

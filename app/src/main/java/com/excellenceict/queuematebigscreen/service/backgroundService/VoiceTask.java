@@ -10,6 +10,7 @@ import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
 import com.excellenceict.queuematebigscreen.R;
+import com.excellenceict.queuematebigscreen.util.QueueMateHelper;
 import com.excellenceict.queuematebigscreen.view.ui.MainActivity;
 
 import java.io.File;
@@ -40,18 +41,18 @@ public class VoiceTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
 
-        try {
-            SocketAddress sockaddr = new InetSocketAddress("www.google.com", 443);
-            Socket sock = new Socket();
-            int timeoutMs = 2000;   // 2 seconds
-            sock.connect(sockaddr, timeoutMs);
-            status = true;
-        } catch (IOException e) {
-            status = false;
-            System.out.println("===========" + e);
-            // Handle exception
-        }
-        if (status) {
+//        try {
+//            SocketAddress sockaddr = new InetSocketAddress("www.google.com", 443);
+//            Socket sock = new Socket();
+//            int timeoutMs = 2000;   // 2 seconds
+//            sock.connect(sockaddr, timeoutMs);
+//            status = true;
+//        } catch (IOException e) {
+//            status = false;
+//            System.out.println("===========" + e);
+//            // Handle exception
+//        }
+        if (QueueMateHelper.serverHostCheck("www.google.com",443)) {
             onlineVoiceTask(mcontext, message, attention_message);
         } else {
             offLineVoiceTask(textToSpeech, mcontext, message, attention_message);
