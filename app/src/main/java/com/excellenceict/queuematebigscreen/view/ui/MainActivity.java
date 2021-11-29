@@ -33,6 +33,7 @@ import com.excellenceict.queuematebigscreen.service.model.ScreenInfo;
 import com.excellenceict.queuematebigscreen.util.Constants;
 import com.excellenceict.queuematebigscreen.util.QueuePreference;
 import com.excellenceict.queuematebigscreen.view.adapter.QueueAdapter;
+import com.excellenceict.queuematebigscreen.view.ui.auth.ConfigActivity;
 import com.excellenceict.queuematebigscreen.viewModel.QueueInfoViewMoodel;
 import com.excellenceict.queuematebigscreen.viewModel.ScreenInfoViewModel;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;

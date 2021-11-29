@@ -1,4 +1,4 @@
-package com.excellenceict.queuematebigscreen.view.ui;
+package com.excellenceict.queuematebigscreen.view.ui.auth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +19,7 @@ import com.excellenceict.queuematebigscreen.util.Constants;
 import com.excellenceict.queuematebigscreen.util.QueueMateHelper;
 import com.excellenceict.queuematebigscreen.util.QueuePreference;
 import com.excellenceict.queuematebigscreen.util.ToastHelper;
+import com.excellenceict.queuematebigscreen.view.ui.MainActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.sql.Connection;
@@ -48,7 +49,7 @@ public class ConfigActivity extends AppCompatActivity {
 
 
         if(queuePreference.getBoolean(Constants.KEY_IS_CONFIG,false)){
-            Intent intent = new Intent(context,MainActivity.class);
+            Intent intent = new Intent(context, MainActivity.class);
             startActivity(intent);
             finish();
         }
