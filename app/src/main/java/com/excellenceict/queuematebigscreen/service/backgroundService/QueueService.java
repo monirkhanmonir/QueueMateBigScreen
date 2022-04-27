@@ -48,7 +48,7 @@ public class QueueService extends Service{
         Log.d("TAG", "Audio Uri: " + audioUri);
         MediaPlayer mp = new MediaPlayer();
         try {
-            mp.setDataSource(audioUri);//Write your location here
+            mp.setDataSource(audioUri);    //Write your location here
             mp.prepare();
             mp.start();
 

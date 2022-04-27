@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         context = MainActivity.this;
         screenList = new ArrayList<>();
         queuePreference = new QueuePreference(context);
-        jSelectedScreenNameId.setText(queuePreference.getString(Constants.KEY_SELECTED_SCREEN_NAME,"SCREEN 1"));
+        jSelectedScreenNameId.setText(queuePreference.getString(Constants.KEY_SELECTED_SCREEN_NAME, "SCREEN 1"));
 
 
         //jQueueRecyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.optionLogout:
                                 Constants.IS_EXIT = false;
-                                queuePreference.putBoolean(Constants.KEY_IS_CONFIG,false);
+                                queuePreference.putBoolean(Constants.KEY_IS_CONFIG, false);
                                 Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), ConfigActivity.class);
                                 startActivity(intent);
@@ -170,9 +170,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void selectScreen(View view) {
 
-        selectedItemIndex = queuePreference.getInt(Constants.KEY_SELECTED_SCREEN_INDEX,0);
-        selectedScreenId = queuePreference.getString(Constants.KEY_SELECTED_SCREEN_ID,"1");
-        selectedScreen = queuePreference.getString(Constants.KEY_SELECTED_SCREEN_NAME,"SCREEN 1");
+        selectedItemIndex = queuePreference.getInt(Constants.KEY_SELECTED_SCREEN_INDEX, 0);
+        selectedScreenId = queuePreference.getString(Constants.KEY_SELECTED_SCREEN_ID, "1");
+        selectedScreen = queuePreference.getString(Constants.KEY_SELECTED_SCREEN_NAME, "SCREEN 1");
 
         ArrayAdapter<ScreenInfo> adapter = new ArrayAdapter<ScreenInfo>(MainActivity.this, android.R.layout.select_dialog_singlechoice, screenList);
         MaterialAlertDialogBuilder builder =
@@ -189,10 +189,10 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                queuePreference.putInt(Constants.KEY_SELECTED_SCREEN_INDEX,selectedItemIndex);
+                                queuePreference.putInt(Constants.KEY_SELECTED_SCREEN_INDEX, selectedItemIndex);
                                 queuePreference.putString(Constants.KEY_SELECTED_SCREEN_NAME, selectedScreen);
                                 queuePreference.putString(Constants.KEY_SELECTED_SCREEN_ID, selectedScreenId);
-                                jSelectedScreenNameId.setText(queuePreference.getString(Constants.KEY_SELECTED_SCREEN_NAME,"SCREEN 1"));
+                                jSelectedScreenNameId.setText(queuePreference.getString(Constants.KEY_SELECTED_SCREEN_NAME, "SCREEN 1"));
                                 Toast.makeText(context, selectedScreen, Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -203,69 +203,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
         builder.show();
-    }
-
-    private class VoiceCallTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-            if (!Python.isStarted()) {
-                Python.start(new AndroidPlatform(MainActivity.this));
-            }
-            Python python = Python.getInstance();
-            PyObject pyObject = python.getModule("script");
-            String audioUri = pyObject.callAttr("genetareTTSFile", voiceData, attention_message).toString();
-
-
-            Log.d("TAG", "Audio Uri: " + audioUri);
-            MediaPlayer mp = new MediaPlayer();
-            try {
-
-                MediaPlayer doorbell = null;
-                if (doorbell == null) {
-                    doorbell = MediaPlayer.create(MainActivity.this, R.raw.doorbell);
-                }
-                doorbell.start();
-                while (doorbell.isPlaying()) {
-
-                }
-
-                mp.setDataSource(audioUri);//Write your location here
-                mp.prepare();
-                mp.start();
-
-                while (mp.isPlaying()) {
-
-                }
-                Log.d("TAG", "Play done...........");
-                File file = new File(audioUri);
-                if (file.exists()) {
-                    if (file.delete()) {
-                        System.out.println("file Deleted :");
-                    } else {
-                        System.out.println("file not Deleted :");
-                    }
-                } else {
-                    System.out.println("file not Exist :");
-                }
-            } catch (Exception e) {
-                Log.d("TAG", "Play exception " + e.getMessage());
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-
-        }
     }
 
 

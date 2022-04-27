@@ -9,11 +9,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="colorHeader">#196A98</color>
-    <color name="colorPrimary">#035483</color>
+    <color name="colorHeader">#309FE4</color>
+    <color name="colorPrimary">#2C64B6</color>
     <color name="colorPrimaryBack">#6B035483</color>
     <color name="appBackground">#4378B8D8</color>
-    <color name="appPoorBackground">#43AFD3E4</color>
+    <color name="appPoorBackground">#90D5C8</color>
     <color name="test">#110736DF</color>
 
 

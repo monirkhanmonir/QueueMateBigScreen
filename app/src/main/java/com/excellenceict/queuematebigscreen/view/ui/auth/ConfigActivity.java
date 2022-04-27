@@ -29,7 +29,7 @@ public class ConfigActivity extends AppCompatActivity {
     private static final String TAG = "ConfigActivity";
     private QueuePreference queuePreference;
     private Context context;
-    private TextInputEditText dbIpAddress, dbPortNumber, dbNameId,dbUserName,dbPassword;
+    private TextInputEditText dbIpAddress, dbPortNumber, dbNameId, dbUserName, dbPassword;
     private Button btnLogin;
     private String ipMatcher = "^\\d{1,3}(\\.(\\d{1,3}(\\.(\\d{1,3}(\\.(\\d{1,3})?)?)?)?)?)?";
 
@@ -48,7 +48,7 @@ public class ConfigActivity extends AppCompatActivity {
         queuePreference = new QueuePreference(context);
 
 
-        if(queuePreference.getBoolean(Constants.KEY_IS_CONFIG,false)){
+        if (queuePreference.getBoolean(Constants.KEY_IS_CONFIG, false)) {
             Intent intent = new Intent(context, MainActivity.class);
             startActivity(intent);
             finish();
@@ -74,11 +74,11 @@ public class ConfigActivity extends AppCompatActivity {
                 if (end > start) {
                     String destTxt = dest.toString();
                     String resultingTxt = destTxt.substring(0, dstart) + source.subSequence(start, end) + destTxt.substring(dend);
-                    if (!resultingTxt.matches (ipMatcher)) {
+                    if (!resultingTxt.matches(ipMatcher)) {
                         return "";
                     } else {
                         String[] splits = resultingTxt.split("\\.");
-                        for (int i=0; i<splits.length; i++) {
+                        for (int i = 0; i < splits.length; i++) {
                             if (Integer.valueOf(splits[i]) > 255) {
                                 return "";
                             }
@@ -94,12 +94,12 @@ public class ConfigActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                queuePreference.putString(Constants.KEY_DATABASE_IP_ADDRESS,dbIpAddress.getText().toString());
-                queuePreference.putString(Constants.KEY_DATABASE_PORT_NUMBER,dbPortNumber.getText().toString());
-                queuePreference.putString(Constants.KEY_DATABASE_NAME,dbNameId.getText().toString());
-                queuePreference.putString(Constants.KEY_DATABASE_USERNAME,dbUserName.getText().toString());
-                queuePreference.putString(Constants.KEY_DATABASE_PASSWORD,dbPassword.getText().toString());
-                queuePreference.putBoolean(Constants.KEY_IS_CONFIG,true);
+                queuePreference.putString(Constants.KEY_DATABASE_IP_ADDRESS, dbIpAddress.getText().toString());
+                queuePreference.putString(Constants.KEY_DATABASE_PORT_NUMBER, dbPortNumber.getText().toString());
+                queuePreference.putString(Constants.KEY_DATABASE_NAME, dbNameId.getText().toString());
+                queuePreference.putString(Constants.KEY_DATABASE_USERNAME, dbUserName.getText().toString());
+                queuePreference.putString(Constants.KEY_DATABASE_PASSWORD, dbPassword.getText().toString());
+                queuePreference.putBoolean(Constants.KEY_IS_CONFIG, true);
                 ToastHelper.showSnackBarToast(v, "Login Success!", Color.WHITE, Color.BLUE);
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
@@ -116,44 +116,43 @@ public class ConfigActivity extends AppCompatActivity {
         String userName = dbUserName.getText().toString().trim();
         String password = dbPassword.getText().toString().trim();
 
-        if(ipAddress==null || ipAddress.isEmpty()){
+        if (ipAddress == null || ipAddress.isEmpty()) {
             ToastHelper.showSnackBarToast(view, "Please input an ip address!", Color.WHITE, Color.RED);
-            Log.d(TAG,"Please Inter IP Address");
-        }else if(!QueueMateHelper.validateIpAddress(ipAddress)){
+            Log.d(TAG, "Please Inter IP Address");
+        } else if (!QueueMateHelper.validateIpAddress(ipAddress)) {
             ToastHelper.showSnackBarToast(view, "Please input valid ip address!", Color.WHITE, Color.RED);
-            Log.d(TAG,"Please Inter Valid Ip Address");
-        }else if(portNumber==null || portNumber.isEmpty()){
+            Log.d(TAG, "Please Inter Valid Ip Address");
+        } else if (portNumber == null || portNumber.isEmpty()) {
             ToastHelper.showSnackBarToast(view, "Please input valid port number!", Color.WHITE, Color.RED);
-            Log.d(TAG,"Please input port number ");
-        }else if(dbName ==null || dbName.isEmpty()){
+            Log.d(TAG, "Please input port number ");
+        } else if (dbName == null || dbName.isEmpty()) {
             ToastHelper.showSnackBarToast(view, "Please input database name!", Color.WHITE, Color.RED);
-            Log.d(TAG,"Please input database name ");
-        }
-        else if(userName ==null || userName.isEmpty()){
-            Log.d(TAG,"Please input database user name");
+            Log.d(TAG, "Please input database name ");
+        } else if (userName == null || userName.isEmpty()) {
+            Log.d(TAG, "Please input database user name");
             ToastHelper.showSnackBarToast(view, "Please input database user name!", Color.WHITE, Color.RED);
-        }else if(password == null || password.isEmpty()){
+        } else if (password == null || password.isEmpty()) {
             ToastHelper.showSnackBarToast(view, "Please input database password!", Color.WHITE, Color.RED);
-            Log.d(TAG,"Please input port number ");
-        }else {
+            Log.d(TAG, "Please input port number ");
+        } else {
 
             TestDBConnector connector = new TestDBConnector(
-                    ipAddress,portNumber,dbName.toUpperCase(),
+                    ipAddress, portNumber, dbName.toUpperCase(),
                     userName.toUpperCase(),
                     password.toUpperCase());
-            Log.d(TAG,"Connection Ip......... "+ipAddress+" //"+portNumber);
-            if(QueueMateHelper.serverHostCheck(ipAddress,Integer.parseInt(portNumber))){
+            Log.d(TAG, "Connection Ip......... " + ipAddress + " //" + portNumber);
+            if (QueueMateHelper.serverHostCheck(ipAddress, Integer.parseInt(portNumber))) {
                 Connection connection = null;
                 try {
                     connection = connector.createConnection();
-                    if(connection!=null){
-                        Log.d(TAG,"Connection Success.......... ");
+                    if (connection != null) {
+                        Log.d(TAG, "Connection Success.......... ");
                         ToastHelper.showSnackBarToast(view, "Database connection success!", Color.WHITE, Color.BLUE);
                         btnLogin.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         btnLogin.setVisibility(View.INVISIBLE);
                         ToastHelper.showSnackBarToast(view, "Database not connected. Please check username and password!", Color.WHITE, Color.RED);
-                        Log.d(TAG,"Connection fail.............. ");
+                        Log.d(TAG, "Connection fail.............. ");
                     }
                 } catch (ClassNotFoundException e) {
                     ToastHelper.showSnackBarToast(view, "Database not connected. Please check username and password!", Color.WHITE, Color.RED);
@@ -165,9 +164,9 @@ public class ConfigActivity extends AppCompatActivity {
                     throwables.printStackTrace();
                 }
 
-            }else {
+            } else {
                 ToastHelper.showSnackBarToast(view, "Server is not rechable! Please check IP or Port", Color.WHITE, Color.RED);
-                Log.d(TAG,"..............IP: "+ipAddress+" // Port number: "+portNumber+". server is not rechable");
+                Log.d(TAG, "..............IP: " + ipAddress + " // Port number: " + portNumber + ". server is not rechable");
             }
         }
     }
